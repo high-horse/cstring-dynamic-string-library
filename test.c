@@ -24,6 +24,9 @@ int main() {
     cstring_append(&a, "some unholy bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
     printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
     
+    cstring_append_cstring(&a, &a);
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    
     return  EXIT_SUCCESS;
 }
 
