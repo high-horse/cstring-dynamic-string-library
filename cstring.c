@@ -68,6 +68,7 @@ bool cstring_ends_with(CString *self, const char *suffix) {
     return suffix_len <= self->len && strcmp(self->str + self->len - suffix_len, suffix) == 0;
 }
 
+// TODO: fix self append
 bool cstring_append(CString *self, const char *suffix) {
     if(!suffix) {
         return  false;
@@ -170,7 +171,7 @@ bool cstring_append_char(CString *self, const char suffix_char) {
     return true;
 }
 
-
+// todo: fix insert
 bool cstring_prepend(CString *self, const char *prefix){
     size_t prefix_len = strlen(prefix);
     size_t new_len = self->len + prefix_len;
