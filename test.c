@@ -2,6 +2,33 @@
 #include "cstring.h"
 
 int main() {
+    CString a = new_cstring("");
+    CString s = new_cstring("world");
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    // printf("S len => %d\t capacity => %d\t value =>%s\n", (int)s.len, (int)s.capacity, s.str);
+    
+    cstring_prepend_cstring(&a, &s);
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    // printf("S len => %d\t capacity => %d\t value =>%s\n", (int)s.len, (int)s.capacity, s.str);
+    
+    cstring_append_char(&a, 'a');
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    // printf("S len => %d\t capacity => %d\t value =>%s\n", (int)s.len, (int)s.capacity, s.str);
+    
+    cstring_append(&a, "some unholy aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    
+    cstring_append(&a, "some unholy bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    
+    cstring_append(&a, "some unholy bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    
+    return  EXIT_SUCCESS;
+}
+
+void test() {
+    
     CString first = new_cstring("Hellot");
     CString second = new_cstring("hello");
     CString third = new_cstring("");
@@ -33,6 +60,5 @@ int main() {
     
     cstring_prepend(&first, "prepended ");
     printf("first =>%s \n second =>%s\n", first.str, second.str);
-    
-    return  EXIT_SUCCESS;
+    return;
 }

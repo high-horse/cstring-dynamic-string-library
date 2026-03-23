@@ -164,3 +164,34 @@ bool cstring_prepend(CString *self, const char *prefix){
     self->len = new_len;
     return true;
 }
+
+bool cstring_prepend_cstring(CString *self, CString *prepend_cstring) {
+    size_t prefix_len = prepend_cstring->len;
+    size_t new_len = self->len + prefix_len;
+    
+    if(self->capacity < new_len +1) {
+        size_t new_capacity = (self->capacity == 0) ? 16 : self->capacity * 2;
+        while(new_capacity < new_len + 1) {
+            new_capacity *= 2;
+        }
+        
+        char *new_str = realloc(self->str, new_capacity);
+        if(!new_str) {
+            perror("FAILED TO REALLOC:");
+            return false;
+        }
+        
+        self->str = new_str;
+        self->capacity = new_capacity;
+    }
+    
+    memmove(self->str + prefix_len, self->str, self->len);
+    memcpy(self->str, prepend_cstring->str, prefix_len);
+    self->str[new_len] = '\0';
+    self->len = new_len;
+    return true;
+}
+
+bool cstring_prepend_char(CString *self, const char item, char prefix_char){
+    
+}
