@@ -113,7 +113,7 @@ bool cstring_append_cstring(CString *self, const CString *append_cstring) {
     size_t new_len = self->len + suffix_len;
 
     char *src = append_cstring->str;
-    const bool overlap = (src >= self->str) && (src < (self->str + self->len));
+    const bool overlap = (src >= self->str) && (src + suffix_len < self->str + self->len);
     char *temp = NULL;
     if(overlap) {
         temp = malloc(append_cstring->len);
@@ -202,7 +202,7 @@ bool cstring_prepend_cstring(CString *self, CString *prepend_cstring) {
     size_t new_len = self->len + prefix_len;
 
     char *src = prepend_cstring->str;
-    bool overlap = (src >= self->str) && (src < (self->str + self->len));
+    bool overlap = (src >= self->str) && (src + prefix_len < (self->str + self->len));
     char *temp = NULL;
     if(overlap) {
         temp = malloc(prefix_len);
