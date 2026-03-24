@@ -68,25 +68,26 @@ bool cstring_ends_with(CString *self, const char *suffix) {
     return suffix_len <= self->len && strcmp(self->str + self->len - suffix_len, suffix) == 0;
 }
 
-// TODO: fix self append
+
 bool cstring_append(CString *self, const char *suffix) {
     if(!suffix) {
         return  false;
     }
     size_t suffix_len = strlen(suffix);
     size_t new_len = self->len + suffix_len;
-
-    // in case of same strring is passed
-    if(suffix >= self->str && suffix <= (self->str + self->len)) {
-        char *temp = malloc(suffix_len);
-        if(!temp){
-            perror("FAILED TO ALLOCATE MEMORY"); return false;
+    
+    char *src = (char *)suffix;
+    char *temp = NULL;
+    // in case of same string
+    if((suffix >= self->str) && (suffix < self->str + self->len)) {
+        temp = malloc(suffix_len);
+        if(!temp) {
+            perror("FAILED TO ALLOCATE MEMORY");
+            return false;
         }
         memcpy(temp, suffix, suffix_len);
-        bool ok = cstring_append(self, temp);
-        free(temp);
-        return ok;
-    }
+        src = temp;
+    } 
 
     if(self->capacity < new_len +1) {
         size_t new_capacity = (self->capacity == 0) ? 16 : self->capacity *2;
@@ -96,15 +97,17 @@ bool cstring_append(CString *self, const char *suffix) {
         char *new_str = realloc(self->str, new_capacity); // +1 for null terminating the string.
         if(!new_str){
             perror("FAILED TO REALLOC THE STRING:");
+            free(temp);
             return false;
         }
         self->str = new_str;
         self->capacity = new_capacity;
     }
 
-    memcpy(self->str + self->len, suffix, suffix_len);
+    memcpy(self->str + self->len, src, suffix_len);
     self->str[new_len] = '\0';
     self->len = new_len;
+    free(temp);
     return true;
 }
 
@@ -113,9 +116,8 @@ bool cstring_append_cstring(CString *self, const CString *append_cstring) {
     size_t new_len = self->len + suffix_len;
 
     char *src = append_cstring->str;
-    const bool overlap = (src >= self->str) && (src + suffix_len < self->str + self->len);
     char *temp = NULL;
-    if(overlap) {
+    if((src >= self->str) && (src  < self->str + self->len)) {
         temp = malloc(append_cstring->len);
         if(!temp) {
             perror("FAILED TO ALLOCATE MEMORY:");
@@ -133,7 +135,7 @@ bool cstring_append_cstring(CString *self, const CString *append_cstring) {
         char *new_str = realloc(self->str, new_capacity); // +1 for null terminating the string.
         if(!new_str){
             perror("FAILED TO REALLOC THE STRING:");
-            if(overlap) free(temp);
+            free(temp);
             return false;
         }
         self->str = new_str;
@@ -143,7 +145,7 @@ bool cstring_append_cstring(CString *self, const CString *append_cstring) {
     memcpy(self->str + self->len, src, suffix_len);
     self->str[new_len] = '\0';
     self->len = new_len;
-    if(overlap) free(temp);
+    free(temp);
     return true;
 }
 
@@ -176,6 +178,18 @@ bool cstring_prepend(CString *self, const char *prefix){
     size_t prefix_len = strlen(prefix);
     size_t new_len = self->len + prefix_len;
 
+    char *src = (char *)prefix;
+    char *temp = NULL;
+    if(src >= self->str && src < self->str + self->len) {
+        temp = malloc(prefix_len);
+        if(!temp) {
+            perror("FAILED TO MALLOC");
+            return false;
+        }
+        memcpy(temp, src, prefix_len);
+        src = temp;
+    }
+    
     if(self->capacity < new_len + 1) {
         size_t new_capacity = (self->capacity == 0) ? 16 : self->capacity * 2;
         while (new_capacity < new_len + 1) {
@@ -184,6 +198,7 @@ bool cstring_prepend(CString *self, const char *prefix){
         char *new_str = realloc(self->str, new_capacity);
         if(!new_str) {
             perror("FAILED TO REALLOC THE STRING:");
+            free(temp);
             return false;
         }
         self->str = new_str;
@@ -191,9 +206,10 @@ bool cstring_prepend(CString *self, const char *prefix){
     }
 
     memmove(self->str + prefix_len, self->str, self->len);
-    memcpy(self->str, prefix, prefix_len);
+    memcpy(self->str, src, prefix_len);
     self->str[new_len] = '\0';
     self->len = new_len;
+    free(temp);
     return true;
 }
 
@@ -202,9 +218,8 @@ bool cstring_prepend_cstring(CString *self, CString *prepend_cstring) {
     size_t new_len = self->len + prefix_len;
 
     char *src = prepend_cstring->str;
-    bool overlap = (src >= self->str) && (src + prefix_len < (self->str + self->len));
     char *temp = NULL;
-    if(overlap) {
+    if((src >= self->str) && (src  < (self->str + self->len))) {
         temp = malloc(prefix_len);
         if(!temp) {
             perror("FAILED TO ALLOCATE:");
@@ -223,7 +238,7 @@ bool cstring_prepend_cstring(CString *self, CString *prepend_cstring) {
         char *new_str = realloc(self->str, new_capacity);
         if(!new_str) {
             perror("FAILED TO REALLOC:");
-            if(overlap)free(temp);
+            free(temp);
             return false;
         }
 
@@ -236,6 +251,6 @@ bool cstring_prepend_cstring(CString *self, CString *prepend_cstring) {
     self->str[new_len] = '\0';
     self->len = new_len;
 
-    if(overlap) free(temp);
+    free(temp);
     return true;
 }

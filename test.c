@@ -7,10 +7,10 @@ int main() {
     printf("%d %d\n", &a , &a == &a);
     printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
     
-    cstring_prepend_cstring(&a, &a);
-    cstring_prepend_cstring(&a, &a);
-    cstring_prepend_cstring(&a, &a);
-    cstring_prepend_cstring(&a, &a);
+    // cstring_prepend_cstring(&a, &a);
+    cstring_prepend(&a, a.str+1);
+    // cstring_prepend_cstring(&a, &a);
+    // cstring_prepend_cstring(&a, &a);
     
     printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
     
