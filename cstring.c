@@ -383,9 +383,8 @@ bool cstring_replace(CString *self, const char *oldstr, const char *newstr) {
 bool cstring_replaceall(CString *self, const char *oldstr, const char *newstr) {
     bool replaced = false;
     if(cstring_contains(self, oldstr)) {
-         while (cstring_replace(self, oldstr, newstr)) {
-             replaced = true;
-         }
+        replaced = true;
+        while (cstring_replace(self, oldstr, newstr)) ;
     } 
     return replaced;
 }
