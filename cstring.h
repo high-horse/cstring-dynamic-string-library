@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define AT_FIRST_INDEX 0
+#define AT_LAST_INDEX -1
+
 typedef struct {
     char *str;
     size_t len;
@@ -46,8 +49,8 @@ bool cstring_prepend(CString *self, const char *prefix);
 bool cstring_prepend_cstring(CString *self, CString *prepend_cstring);
 bool cstring_prepend_char(CString *self, char prefix_char);
 
-int cstring_insert_char(CString *self, size_t pos, char new_char);
-int cstring_insert(CString *self, size_t pos, const char *text);
+bool cstring_insert_char(CString *self, size_t pos, char new_char);
+bool cstring_insert(CString *self, size_t pos, const char *text);
 int cstring_replace(CString *self, const char *oldstr, const char *newstr);
 
 

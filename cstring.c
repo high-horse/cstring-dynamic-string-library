@@ -277,3 +277,74 @@ bool cstring_prepend_char(CString *self, char prefix_char){
     self->str[new_len] = '\0';
     return true;
 }
+
+bool cstring_insert_char(CString *self, size_t pos, char new_char) {
+    if(pos > self->len) {
+        return false;
+    }
+
+    size_t new_len = self->len + 1;
+    if(self->capacity < new_len + 1) {
+        size_t new_capacity = (self->capacity == 0) ? 16 : self->capacity * 2;
+        while(new_capacity < new_len + 1) {
+            new_capacity *= 2;
+        }
+        char *new_str = realloc(self->str, new_capacity);
+        if(!new_str) {
+            perror("FAILED TO REALLOC MEMORY");
+            return false;
+        }
+        
+        self->str = new_str;
+        self->capacity = new_capacity;
+    }
+
+    memmove(self->str + pos + 1, self->str + pos, self->len - pos);
+    self->str[pos] = new_char;
+    self->str[new_len] = '\0';
+    self->len = new_len;
+    return true;
+}
+
+bool cstring_insert(CString *self, size_t pos, const char *text) {
+    if(!text) return false;
+    if(pos == AT_LAST_INDEX) pos = self->len;
+    if (pos > self->len) return false;
+    
+    size_t src_len = strlen(text);
+    size_t new_len = src_len + self->len;
+    char *src = (char*) text;
+    char *temp = NULL;
+    if(src >= self->str && src < self->str + self->len) {
+        temp = malloc(src_len);
+        if(!temp){
+            perror("FAILED TO ALLOCATE MEMORY:");
+            return  false;
+        }
+        
+        memcpy(temp, src, src_len);
+        src = temp;
+    }
+    
+    if(self->capacity < new_len + 1) {
+        size_t new_capacity = (self->capacity == 0) ? 16 : self->capacity * 2;
+        while (new_capacity < new_len +1) new_capacity *= 2;
+        
+        char *new_str = realloc(self->str, new_capacity);
+        if(!new_str) {
+            perror("FAILED TO ALLOCATE MEMORY:");
+            free(temp);
+            return false;
+        }
+        
+        self->str = new_str;
+        self->capacity = new_capacity;
+    }
+    
+    memmove(self->str + pos + src_len, self->str + pos, self->len - pos + 1);
+    memcpy(self->str + pos, src, src_len);
+    
+    self->len = new_len;
+    free(temp);
+    return true;
+}
