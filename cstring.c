@@ -348,3 +348,44 @@ bool cstring_insert(CString *self, size_t pos, const char *text) {
     free(temp);
     return true;
 }
+
+bool cstring_replace(CString *self, const char *oldstr, const char *newstr) {
+    if(!oldstr || !newstr) return  false;
+    size_t old_len = strlen(oldstr);
+    size_t new_len = strlen(newstr);
+    const char *pos = strstr(self->str, oldstr);
+    if(!pos) return false;
+    
+    size_t pos_offset = pos - self->str;
+    size_t new_total_len = self->len - old_len + new_len;
+    
+    if(self->capacity < new_total_len + 1) {
+        size_t new_capacity = (self->capacity == 0) ? 16 : self->capacity * 2;
+        while (new_capacity < new_total_len + 1) new_capacity *= 2;
+        
+        char *new_str = realloc(self->str, new_capacity);
+        if(!new_str) {
+            perror("FAILED TO ALLOCATE MEMORY:");
+            return false;
+        }
+        
+        self->str = new_str;
+        self->capacity = new_capacity;
+    }
+    
+    memmove(self->str + pos_offset + new_len, self->str + pos_offset + old_len, self->len - pos_offset - old_len + 1);
+    memcpy(self->str + pos_offset, newstr, new_len);
+    
+    self->len = new_total_len;
+    return true;
+}
+
+bool cstring_replaceall(CString *self, const char *oldstr, const char *newstr) {
+    bool replaced = false;
+    if(cstring_contains(self, oldstr)) {
+         while (cstring_replace(self, oldstr, newstr)) {
+             replaced = true;
+         }
+    } 
+    return replaced;
+}

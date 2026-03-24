@@ -3,12 +3,13 @@
 
 int main() {
   
-    CString a = new_cstring("hello");
+    CString a = new_cstring("hello, hello, hello, hello");
     // printf("%d %d\n", &a , &a == &a);
     printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
     
     // cstring_prepend_cstring(&a, &a);
-    cstring_insert(&a, AT_LAST_INDEX, "-help-");
+    // cstring_insert(&a, AT_LAST_INDEX, "-help-");
+    cstring_replaceall(&a, "hello", "help");
     // cstring_prepend_cstring(&a, &a);
     // cstring_prepend_cstring(&a, &a);
     
