@@ -51,7 +51,9 @@ bool cstring_prepend_char(CString *self, char prefix_char);
 
 bool cstring_insert_char(CString *self, size_t pos, char new_char);
 bool cstring_insert(CString *self, size_t pos, const char *text);
-int cstring_replace(CString *self, const char *oldstr, const char *newstr);
+
+bool cstring_replace(CString *self, const char *oldstr, const char *newstr);
+bool cstring_replace_char(CString *self, const char oldchar, const char newchar);
 
 
 // trim
