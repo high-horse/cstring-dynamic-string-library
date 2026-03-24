@@ -44,7 +44,7 @@ bool cstring_append_char(CString *self, const char suffix_char);
 
 bool cstring_prepend(CString *self, const char *prefix);
 bool cstring_prepend_cstring(CString *self, CString *prepend_cstring);
-bool cstring_prepend_char(CString *self, const char item, char prefix_char);
+bool cstring_prepend_char(CString *self, char prefix_char);
 
 int cstring_insert_char(CString *self, size_t pos, char new_char);
 int cstring_insert(CString *self, size_t pos, const char *text);
