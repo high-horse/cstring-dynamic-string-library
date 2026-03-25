@@ -2,18 +2,13 @@
 #include "cstring.h"
 
 int main() {
-  
-    CString a = new_cstring("hello, hello, hello, hello");
-    // printf("%d %d\n", &a , &a == &a);
-    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    CString a = new_cstring("         hello        ");
+    printf("a str => |%s| \n", a.str);
     
-    // cstring_prepend_cstring(&a, &a);
-    // cstring_insert(&a, AT_LAST_INDEX, "-help-");
-    cstring_replaceall(&a, "hello", "help");
-    // cstring_prepend_cstring(&a, &a);
-    // cstring_prepend_cstring(&a, &a);
-    
-    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    cstring_ltrim(&a);
+    printf("a str => |%s| \n", a.str);
+    cstring_rtrim(&a);
+    printf("a str => |%s| \n", a.str);
     
     return  EXIT_SUCCESS;
 }
@@ -79,4 +74,20 @@ void test_again(){
     
     cstring_append_cstring(&a, &a);
     printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+}
+
+
+void test_replace(){
+    CString a = new_cstring("hello, hello, hello, hello");
+    // printf("%d %d\n", &a , &a == &a);
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    
+    // cstring_prepend_cstring(&a, &a);
+    // cstring_insert(&a, AT_LAST_INDEX, "-help-");
+    cstring_replaceall(&a, "hell", "help");
+    // cstring_prepend_cstring(&a, &a);
+    // cstring_prepend_cstring(&a, &a);
+    
+    printf("A len => %d\t capacity => %d\t value =>%s\n", (int)a.len, (int)a.capacity, a.str);
+    
 }

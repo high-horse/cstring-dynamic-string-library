@@ -59,9 +59,9 @@ bool cstring_replace_char(CString *self, const char oldchar, const char newchar)
 
 
 // trim
-int cstring_trim(CString *self);
-int cstring_ltrim(CString *self);
-int cstring_rtrim(CString *self);
+void cstring_ltrim(CString *self);
+void cstring_rtrim(CString *self);
+void cstring_trim(CString *self);
 
 
 // split/ join

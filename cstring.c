@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <ctype.h>
 
 CString new_cstring(const char *data) {
     size_t length = strlen(data);
@@ -387,4 +387,32 @@ bool cstring_replaceall(CString *self, const char *oldstr, const char *newstr) {
         while (cstring_replace(self, oldstr, newstr)) ;
     } 
     return replaced;
+}
+
+void cstring_ltrim(CString *self) {
+    if(self->len == 0 ) return;
+    
+    size_t start = 0;
+    while(start < self->len && isspace(self->str[start])) {
+        start ++;
+    };
+    
+    if(start > 0) {
+        memmove(self->str, self->str + start, self->len - start + 1);
+        self->len -= start;
+    }
+    return;
+}
+
+
+void cstring_rtrim(CString *self) {
+    if (self->len == 0) return;
+
+    size_t end = self->len;
+    while (end > 0 && isspace((unsigned char)self->str[end - 1])) {
+        end--;
+    }
+
+    self->len = end;
+    self->str[self->len] = '\0';
 }
