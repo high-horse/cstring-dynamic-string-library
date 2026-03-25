@@ -416,3 +416,8 @@ void cstring_rtrim(CString *self) {
     self->len = end;
     self->str[self->len] = '\0';
 }
+
+void cstring_trim(CString *self) {
+    cstring_ltrim(self);
+    cstring_rtrim(self);
+}

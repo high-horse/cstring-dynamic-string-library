@@ -9,6 +9,12 @@ int main() {
     printf("a str => |%s| \n", a.str);
     cstring_rtrim(&a);
     printf("a str => |%s| \n", a.str);
+    cstring_append(&a, "            ");
+    cstring_prepend(&a, "            ");
+    printf("a str => |%s| \n", a.str);
+    cstring_trim(&a);
+    printf("a str => |%s| \n", a.str);
+    
     
     return  EXIT_SUCCESS;
 }
