@@ -72,8 +72,8 @@ CString cstring_join(CString *self, int count, const char *delim);
 CString cstring_substring(CString *self, size_t start, size_t len);
 
 
-int cstring_to_upper(CString *self);
-int cstring_to_lower(CString *self);
+void cstring_to_upper(CString *self);
+void cstring_to_lower(CString *self);
 
 // remove chars
 int cstring_remove(CString *self, const char *chars);

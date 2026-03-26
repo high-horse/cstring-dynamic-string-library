@@ -421,3 +421,15 @@ void cstring_trim(CString *self) {
     cstring_ltrim(self);
     cstring_rtrim(self);
 }
+
+void cstring_to_upper(CString *self){
+    for (size_t i = 0; i < self->len; i++) {
+        self->str[i] = toupper(self->str[i]);
+    }
+}
+
+void cstring_to_lower(CString *self) {
+    for (size_t i = 0; i < self->len; i++) {
+        self->str[i] = tolower(self->str[i]);
+    }
+}
