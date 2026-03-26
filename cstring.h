@@ -17,6 +17,21 @@ typedef struct {
 } CString;
 
 typedef struct {
+    CString *item;
+    size_t len;
+} CStringArray;
+
+typedef struct {
+    const char * str; 
+    size_t len;
+} CStringView;
+
+typedef struct {
+    CStringView *item;
+    size_t len;
+} CStringViewArray;
+
+typedef struct {
     char *data;
     size_t len;
     size_t size;
@@ -63,17 +78,16 @@ void cstring_ltrim(CString *self);
 void cstring_rtrim(CString *self);
 void cstring_trim(CString *self);
 
+// upper / lower case
+void cstring_to_upper(CString *self);
+void cstring_to_lower(CString *self);
 
 // split/ join
-CString *cstring_split(CString *self, const char *deliim, int *count);
-CString cstring_join(CString *self, int count, const char *delim);
+CStringArray cstring_split(CString *self, const char *delim);
+CString cstring_join(CString *self, const char *delim, size_t count);
 
 // substring
 CString cstring_substring(CString *self, size_t start, size_t len);
-
-
-void cstring_to_upper(CString *self);
-void cstring_to_lower(CString *self);
 
 // remove chars
 int cstring_remove(CString *self, const char *chars);
@@ -85,5 +99,8 @@ double cstring_to_double(CString *self);
 
 int cstring_reverse(CString *self);
 CString cstring_repeat(CString *self, size_t times);
+
+
+void cstring_array_free(CStringArray *arr);
 
 #endif

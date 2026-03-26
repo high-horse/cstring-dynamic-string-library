@@ -433,3 +433,18 @@ void cstring_to_lower(CString *self) {
         self->str[i] = tolower(self->str[i]);
     }
 }
+
+void cstring_array_free(CStringArray *arr) {
+    for(size_t i = 0; i < arr->len; i++) {
+        free(arr->item[i].str);
+    }
+    free(arr->item);
+    
+    arr->item = NULL;
+    arr->len = 0;
+}
+
+CStringArray cstring_split(CString *self, const char *delim){
+    
+}
+
