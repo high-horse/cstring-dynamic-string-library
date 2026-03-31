@@ -19,6 +19,7 @@ typedef struct {
 typedef struct {
     CString *item;
     size_t len;
+    size_t capacity;
 } CStringArray;
 
 typedef struct {

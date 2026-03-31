@@ -14,7 +14,6 @@ CString new_cstring(const char *data) {
     return (CString){str, length, length+1};
 }
 
-
 void destroy_cstring(CString *self){
     free(self->str);
     self->str = NULL;
@@ -444,7 +443,51 @@ void cstring_array_free(CStringArray *arr) {
     arr->len = 0;
 }
 
-CStringArray cstring_split(CString *self, const char *delim){
+CStringArray cstring_split(CString *self, const char *delim) {
+    CStringArray result = (CStringArray){
+      .item = NULL,
+      .len = 0,
+      .capacity = 2,
+    };
     
-}
+    char *duplicate_copy = strdup(self->str);
+    if(duplicate_copy == NULL) return result;
+    
+    result.item = malloc(result.capacity * sizeof(CString));
+    if(result.item == NULL) {
+        free(duplicate_copy);
+        return result;
+    }
+    
+    char *token = strtok(duplicate_copy, delim);
+    
+    while(token != NULL) {
+        if(result.len == result.capacity) {
+            size_t new_capacity = result.capacity * 2;
+            CString *tmp = realloc(result.item, new_capacity * sizeof(CString));
+            if(tmp == NULL) {
+                for(size_t i = 0; i < result.len; i++) {
+                    free(result.item[i].str);
+                }
+                
+                free(result.item);
+                free(duplicate_copy);
+                
+                result.item = NULL;
+                result.len = 0;
+                result.capacity = 0;
+                return result;
+            }
+            
+            result.item = tmp;
+            result.capacity = new_capacity;
+        }
 
+        result.item[result.len] = new_cstring(token);
+        result.len ++;
+        
+        token = strtok(NULL, delim);
+    }
+    free(duplicate_copy);
+    return result;
+}

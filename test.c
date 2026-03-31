@@ -2,7 +2,15 @@
 #include <stdio.h>
 
 int main() {
-    CString a = "hello world | ";
+    CString greet = new_cstring("hello world good morning   h   n ");
+    CStringArray results =  cstring_split(&greet, " ");
+    printf("results.len => %zu\n", results.len);
+    for (size_t i = 0; i < results.len; i++) {
+        printf("result[%zu] => %s\n", i, results.item[i].str);
+    }
+    
+    cstring_array_free(&results);
+    
     return EXIT_SUCCESS;
 }
 
