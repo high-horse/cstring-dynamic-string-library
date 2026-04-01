@@ -507,3 +507,23 @@ CString cstring_substring(CString *self, size_t start, size_t len){
     free(substr);
     return result;
 }
+
+
+static void reverseString(char *str) {
+    char *start = str;
+    char *end = str + strlen(str) - 1;
+    char temp;
+    
+    while(start < end) {
+        temp =  *start;
+        *start = *end;
+        *end = temp;
+        
+        start ++;
+        end --;
+    }
+}
+
+void cstring_reverse(CString *self){
+    printf("reversed %s\n", self->str);
+}

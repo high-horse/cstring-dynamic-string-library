@@ -7,6 +7,10 @@ int main() {
     CString child = cstring_substring(&parent, 0, 100);
     printf("child => |%s|\n len => %d\n", child.str, (int)child.len);
     
+    cstring_reverse(&child);
+    printf("child => |%s|\n", child.str, (int)child.len);
+    
+    
     return EXIT_SUCCESS;
 }
 

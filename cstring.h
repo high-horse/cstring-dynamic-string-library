@@ -98,7 +98,7 @@ int cstring_strip(CString *self, const char *chars);
 int cstring_to_int(CString *self);
 double cstring_to_double(CString *self);
 
-int cstring_reverse(CString *self);
+void cstring_reverse(CString *self);
 CString cstring_repeat(CString *self, size_t times);
 
 
