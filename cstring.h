@@ -85,7 +85,7 @@ void cstring_to_lower(CString *self);
 
 // split/ join
 CStringArray cstring_split(CString *self, const char *delim);
-CString cstring_join(CString *self, const char *delim, size_t count);
+// CString cstring_join(CString *self, const char *delim, size_t count);
 
 // substring
 CString cstring_substring(CString *self, size_t start, size_t len);

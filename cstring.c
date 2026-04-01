@@ -491,3 +491,19 @@ CStringArray cstring_split(CString *self, const char *delim) {
     free(duplicate_copy);
     return result;
 }
+
+CString cstring_substring(CString *self, size_t start, size_t len){
+    if(start >= self->len) return new_cstring("");
+    if(len == 0) return new_cstring("");
+    
+    size_t actual_len = (start + len > self->len) ? (self->len - start) : len;
+    char *substr = malloc(actual_len + 1);
+    if(substr == NULL) return new_cstring("");
+    
+    memcpy(substr, self->str + start, actual_len);
+    substr[actual_len] = '\0';
+    
+    CString result = new_cstring(substr);
+    free(substr);
+    return result;
+}

@@ -1,15 +1,11 @@
 #include "cstring.h"
 #include <stdio.h>
 
+
 int main() {
-    CString greet = new_cstring("hello world good morning   h   n ");
-    CStringArray results =  cstring_split(&greet, " ");
-    printf("results.len => %zu\n", results.len);
-    for (size_t i = 0; i < results.len; i++) {
-        printf("result[%zu] => %s\n", i, results.item[i].str);
-    }
-    
-    cstring_array_free(&results);
+    CString parent = new_cstring("hello world");
+    CString child = cstring_substring(&parent, 0, 100);
+    printf("child => |%s|\n len => %d\n", child.str, (int)child.len);
     
     return EXIT_SUCCESS;
 }
@@ -128,4 +124,16 @@ void test_upper_lower_case() {
     cstring_to_lower(&a);
     printf("a str => |%s| \n", a.str);
     
+}
+
+
+void test_split() {
+    CString greet = new_cstring("hello world good morning   h   n ");
+    CStringArray results =  cstring_split(&greet, " ");
+    printf("results.len => %zu\n", results.len);
+    for (size_t i = 0; i < results.len; i++) {
+        printf("result[%zu] => %s\n", i, results.item[i].str);
+    }
+    
+    cstring_array_free(&results);
 }
