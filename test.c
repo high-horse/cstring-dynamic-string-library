@@ -10,6 +10,11 @@ int main() {
     cstring_reverse(&child);
     printf("child => |%s|\n", child.str, (int)child.len);
     
+    cstring_reverse(&child);
+    printf("child => |%s|\n", child.str);
+    
+    cstring_replaceall(&child, "hello ", "");
+    printf("replace hello with ''  => |%s|\n", child.str);
     
     return EXIT_SUCCESS;
 }

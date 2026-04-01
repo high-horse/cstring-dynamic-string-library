@@ -90,17 +90,17 @@ CStringArray cstring_split(CString *self, const char *delim);
 // substring
 CString cstring_substring(CString *self, size_t start, size_t len);
 
+// reverse
+void cstring_reverse(CString *self);
+
 // remove chars
 int cstring_remove(CString *self, const char *chars);
-int cstring_strip(CString *self, const char *chars);
 
 // conversion
-int cstring_to_int(CString *self);
-double cstring_to_double(CString *self);
+// int cstring_to_int(CString *self);
+// double cstring_to_double(CString *self);
 
-void cstring_reverse(CString *self);
 CString cstring_repeat(CString *self, size_t times);
-
 
 void cstring_array_free(CStringArray *arr);
 

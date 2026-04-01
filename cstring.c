@@ -1,4 +1,5 @@
 #include "cstring.h"
+#include <cstddef>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -525,5 +526,15 @@ static void reverseString(char *str) {
 }
 
 void cstring_reverse(CString *self){
-    printf("reversed %s\n", self->str);
-}
+    reverseString(self->str);
+ }
+ 
+ CString cstring_repeat(CString *self, size_t times) {
+     if(times < 0) return new_cstring("");
+     
+     CString result = new_cstring("");
+     for(int i = 0; i< times; i++) {
+         cstring_append_cstring(&result, self);
+     }
+     return result;
+ }
